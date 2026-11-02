@@ -1,37 +1,50 @@
-# Profile Explorer
+# 🔍 Profile Explorer
 
-Search any GitHub user to explore their profile, top repositories and languages, or compare two developers side by side. Built with plain HTML, CSS and JavaScript on the public [GitHub REST API](https://docs.github.com/en/rest), with no frameworks and no build step.
+Explore any GitHub developer in seconds. Search a username to see their profile, best repositories and most-used languages, or put two developers side by side and compare them.
 
-**Live demo:** https://khyalddinniazi.github.io/Github-Profiles/
+**🌐 Live demo:** [khyalddinniazi.github.io/Github-Profiles](https://khyalddinniazi.github.io/Github-Profiles/)
 
-![Screenshot](screenshot.png)
+![Profile Explorer screenshot](screenshot.png)
 
-## Features
+## ✨ Features
 
-- **Profile details**: avatar, bio, location, company, website, X/Twitter, join date, followers, following and repo counts
-- **Repository cards**: description, language, stars, forks and last update
-- **Sort and filter**: by stars, recently updated or name, and by language; "Show more" for paging
-- **Top languages**: a breakdown bar of the languages the user's repos are written in
-- **Compare mode**: put two users side by side, with the winner of each stat highlighted 🏆
-- **Shareable links**: `?user=torvalds` or `?user=torvalds&vs=gaearon`, and back/forward navigation works
-- **Recent searches**: your last 5 searches, saved in your browser
-- **Dark and light theme**: follows your system setting by default and remembers your choice
-- **Error handling**: clear messages for unknown users, API rate limits and network errors
-- **Responsive and accessible**: works on mobile, supports the keyboard, and announces results to screen readers
+- **Detailed profiles**: avatar, bio, location, company, website, X/Twitter, join date, followers and repo count
+- **Repository cards**: description, language, stars, forks and when each repo was last updated
+- **Sort and filter**: order repos by stars, recent activity or name, and filter by language
+- **Language breakdown**: a colored bar showing which languages a developer uses most
+- **Compare mode**: two developers side by side, with a 🏆 on the winner of each stat
+- **Shareable links**: every search updates the URL (`?user=torvalds&vs=gaearon`), and back/forward navigation works
+- **Recent searches**: your last 5 searches as one-click shortcuts
+- **Dark and light theme**: follows your system setting and remembers your choice
+- **Responsive and accessible**: works on phones, supports keyboard navigation and screen readers
 
-## Run locally
+## 🛠️ Built with
+
+- **HTML, CSS, JavaScript (ES6+)**, with no frameworks, libraries or build step
+- **[GitHub REST API](https://docs.github.com/en/rest)** for live profile and repository data
+- **localStorage** to keep search history and theme preference
+- **GitHub Pages** for hosting
+
+## 🧠 Engineering highlights
+
+- **XSS protection**: all user-provided text from the API is escaped before it is rendered
+- **Race-condition handling**: a request counter makes sure only the latest search is rendered, even when an older response arrives late
+- **Error handling**: clear messages for unknown users, network failures and API rate limits, including the time the limit resets
+- **Efficient API usage**: profile and repo requests run in parallel, and repo data is cached in memory, so sorting and filtering never call the API again
+- **Theme without flicker**: the theme is applied before the first paint using CSS custom properties
+
+## 🚀 Run locally
 
 ```bash
 git clone https://github.com/khyalddinniazi/Github-Profiles.git
 cd Github-Profiles
 python3 -m http.server 8000
-# open http://localhost:8000
 ```
 
-You can also open `index.html` directly in a browser.
+Then open [http://localhost:8000](http://localhost:8000). You can also open `index.html` directly in your browser.
 
-> The GitHub API allows 60 unauthenticated requests per hour per IP. Each search uses 2 requests (4 in compare mode).
+## ⚠️ Limitations
 
-## Credits
-
-Based on the GitHub Profiles project from [50 Projects in 50 Days](https://github.com/bradtraversy/50projects50days) by Brad Traversy and Florin Pop, then extended with the features above.
+- The GitHub API allows **60 unauthenticated requests per hour** per IP address. Each search uses 2 requests, or 4 in compare mode.
+- Up to 100 repositories are loaded per user.
+- Language stats count repositories per language, not lines of code.
