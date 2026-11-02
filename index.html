@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="Search any GitHub user to explore their profile, top repositories and languages, or compare two developers side by side." />
+        <title>Profile Explorer</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔍</text></svg>" />
+        <link rel="stylesheet" href="style.css" />
+        <script>
+            // Set the theme before first paint to avoid a flash of the wrong colors
+            try {
+                document.documentElement.dataset.theme =
+                    localStorage.getItem("gh-profiles:theme") ||
+                    (matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+            } catch (e) {
+                document.documentElement.dataset.theme = "dark";
+            }
+        </script>
+        <script src="script.js" defer></script>
+    </head>
+    <body>
+        <header class="site-header">
+            <h1 class="logo">Profile<span>Explorer</span></h1>
+            <button type="button" id="theme-toggle" class="icon-btn"></button>
+        </header>
+
+        <form id="form" class="search-form">
+            <label for="search" class="sr-only">GitHub username</label>
+            <input type="text" id="search" placeholder="Search a GitHub user" autocomplete="off" spellcheck="false" />
+            <label for="compare-search" class="sr-only">Username to compare with</label>
+            <input type="text" id="compare-search" placeholder="Compare with…" autocomplete="off" spellcheck="false" hidden />
+            <button type="submit" class="btn btn-primary">Search</button>
+            <button type="button" id="compare-toggle" class="btn" aria-pressed="false">⇄ Compare</button>
+        </form>
+
+        <div id="recent" class="recent" hidden></div>
+
+        <main id="main" aria-live="polite"></main>
+
+        <footer class="site-footer">
+            Built by <a href="https://github.com/khyalddinniazi" target="_blank" rel="noopener">@khyalddinniazi</a>
+            · Data from the GitHub API
+        </footer>
+    </body>
+</html>
